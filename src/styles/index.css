@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./themes.css";
 
 @font-face {
   font-family: "Montserrart";
@@ -14,4 +15,9 @@ body {
   background-color: #101010;
   color: #fff;
   font-family: "Montserrart", sans-serif;
+}
+
+.align_center {
+  display: flex;
+  align-items: center;
 }
