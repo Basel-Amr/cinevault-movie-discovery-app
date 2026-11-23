@@ -1,0 +1,135 @@
+/* =========================================
+   THEME SYSTEM — PREMIUM GOLD
+   ========================================= */
+
+/* Default theme */
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Backgrounds */
+  --bg-primary: #090909;
+  --bg-secondary: #141414;
+  --bg-card: #1c1c1c;
+  --bg-elevated: #242424;
+  --bg-hover: #292929;
+  --bg-overlay: rgb(0 0 0 / 70%);
+
+  /* Brand colors */
+  --gold: #d4af37;
+  --gold-light: #f2d27a;
+  --gold-dark: #a78320;
+  --gold-hover: #e5c04a;
+  --gold-soft: rgb(212 175 55 / 12%);
+
+  /* Text */
+  --text-primary: #f5f5f5;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --text-inverse: #090909;
+
+  /* Borders */
+  --border-primary: #303030;
+  --border-secondary: #242424;
+  --border-focus: var(--gold);
+
+  /* Semantic colors */
+  --success: #22c55e;
+  --success-soft: rgb(34 197 94 / 12%);
+
+  --danger: #ef4444;
+  --danger-soft: rgb(239 68 68 / 12%);
+
+  --warning: #f59e0b;
+  --warning-soft: rgb(245 158 11 / 12%);
+
+  --info: #3b82f6;
+  --info-soft: rgb(59 130 246 / 12%);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 20%);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 30%);
+  --shadow-lg: 0 12px 32px rgb(0 0 0 / 40%);
+
+  /* Interaction */
+  --opacity-disabled: 0.5;
+}
+
+/* =========================================
+   LIGHT THEME
+   ========================================= */
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Backgrounds */
+  --bg-primary: #fafaf8;
+  --bg-secondary: #f3f2ee;
+  --bg-card: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-hover: #f5f3ed;
+  --bg-overlay: rgb(0 0 0 / 40%);
+
+  /* Brand colors */
+  --gold: #a78320;
+  --gold-light: #d4af37;
+  --gold-dark: #806315;
+  --gold-hover: #8f701b;
+  --gold-soft: rgb(167 131 32 / 10%);
+
+  /* Text */
+  --text-primary: #181818;
+  --text-secondary: #52525b;
+  --text-muted: #71717a;
+  --text-inverse: #ffffff;
+
+  /* Borders */
+  --border-primary: #e5e2d9;
+  --border-secondary: #eeece6;
+  --border-focus: var(--gold);
+
+  /* Semantic colors */
+  --success: #16a34a;
+  --success-soft: rgb(22 163 74 / 10%);
+
+  --danger: #dc2626;
+  --danger-soft: rgb(220 38 38 / 10%);
+
+  --warning: #d97706;
+  --warning-soft: rgb(217 119 6 / 10%);
+
+  --info: #2563eb;
+  --info-soft: rgb(37 99 235 / 10%);
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 5%);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 8%);
+  --shadow-lg: 0 12px 32px rgb(0 0 0 / 12%);
+
+  /* Interaction */
+  --opacity-disabled: 0.5;
+}
+
+/* =========================================
+   SHARED DESIGN TOKENS
+   ========================================= */
+
+:root {
+  /* Typography */
+  --font-sans: "Inter", system-ui, sans-serif;
+
+  /* Border radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
+
+  /* Layout */
+  --container-width: 1280px;
+}

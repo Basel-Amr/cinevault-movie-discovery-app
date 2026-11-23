@@ -1,10 +1,13 @@
 import React from "react";
-import "./App.css";
+import "./styles/App.css";
+import "./styles/index.css";
+// import MovieList from "./components/MovieList/MovieList";
+import Navbar from "./components/Navbar/Navbar";
 const App = () => {
   return (
     <div className="app">
-      <nav className="navbar">Navbar Content</nav>
-      <main>Main Content</main>
+      <Navbar />
+      {/* <MovieList /> */}
     </div>
   );
 };
