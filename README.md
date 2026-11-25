@@ -1,11 +1,14 @@
-# CineVault
+# CineVault — Movie Discovery App
 
-> A cinematic movie discovery interface for browsing popular, in-theaters, top-rated, and upcoming films.
+> A modern, cinematic movie discovery platform built with React, featuring dynamic movie collections, personalized filtering, and an immersive browsing experience.
 
-CineVault is a responsive React single-page application powered by The Movie Database (TMDB) API. It presents movie collections in a focused, poster-first layout with per-collection rating filters, sorting controls, deep links to TMDB movie pages, and a persistent light/dark theme.
+CineVault is a responsive, single-page movie discovery application powered by the **TMDB API**. It allows users to explore popular, now-playing, top-rated, and upcoming movies through an elegant, poster-focused interface.
 
-**Repository:** [github.com/Basel-Amr/cinevault-movie-discovery-app](https://github.com/Basel-Amr/cinevault-movie-discovery-app)
-**Live Link:** [github.com/Basel-Amr/cinevault-movie-discovery-app](https://basel-amr.github.io/cinevault-movie-discovery-app/]([https://github.com/Basel-Amr/cinevault-movie-discovery-app](https://basel-amr.github.io/cinevault-movie-discovery-app/))
+The application features independent rating filters and sorting preferences for each movie collection, seamless section navigation, interactive movie cards with links to TMDB, and a persistent light/dark theme. Designed with a premium dark-and-gold aesthetic, CineVault combines intuitive navigation, reusable React components, and responsive layouts to deliver a polished movie browsing experience.
+
+**Repository:** [View on GitHub](https://github.com/Basel-Amr/cinevault-movie-discovery-app)
+
+**Live Demo:** [Explore CineVault](https://basel-amr.github.io/cinevault-movie-discovery-app/)
 
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)](https://vite.dev/)
