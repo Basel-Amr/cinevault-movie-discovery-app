@@ -111,9 +111,14 @@ const MovieList = () => {
     try {
       const token = import.meta.env.VITE_TMDB_READ_ACCESS_TOKEN;
 
+      if (!token) {
+        throw new Error("TMDB API token is missing!");
+      }
+
       const response = await fetch(
         "https://api.themoviedb.org/3/movie/popular",
         {
+          method: "GET",
           headers: {
             accept: "application/json",
             Authorization: `Bearer ${token}`,
@@ -122,7 +127,13 @@ const MovieList = () => {
       );
 
       if (!response.ok) {
-        throw new Error("Failed to fetch movies");
+        const errorData = await response.json();
+
+        throw new Error(
+          `TMDB Error ${response.status}: ${
+            errorData.status_message || "Failed to fetch movies"
+          }`,
+        );
       }
 
       const data = await response.json();
