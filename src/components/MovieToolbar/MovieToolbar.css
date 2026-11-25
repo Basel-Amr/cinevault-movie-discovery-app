@@ -26,6 +26,8 @@
   justify-content: space-between;
   gap: 30px;
 
+  min-width: 0;
+
   width: 100%;
   max-width: 1600px;
 
@@ -45,6 +47,7 @@
   gap: 5px;
 
   flex-shrink: 0;
+  min-width: 0;
 }
 
 .toolbar_eyebrow {
@@ -108,12 +111,15 @@
   gap: 28px;
 
   min-width: 0;
+  max-width: 100%;
 }
 
 .toolbar_rating_control {
   display: flex;
   align-items: center;
   gap: 12px;
+
+  min-width: 0;
 }
 
 .toolbar_control_label {
@@ -132,6 +138,8 @@
   display: flex;
   align-items: center;
   gap: 16px;
+
+  min-width: 0;
 }
 
 .toolbar_sort_group {
@@ -147,6 +155,8 @@
   background: transparent;
   border: 1px solid transparent;
   border-radius: 9px;
+
+  min-width: 0;
 
   transition: all var(--transition-normal);
 }
@@ -371,6 +381,7 @@
 
   .toolbar_sort_controls {
     gap: 5px;
+    max-width: 100%;
   }
 
   .toolbar_sort_group {
