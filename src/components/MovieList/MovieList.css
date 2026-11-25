@@ -1,53 +1,385 @@
+/* =========================================
+   CINEVAULT - MOVIE LIST
+========================================= */
+
+/* SECTION HEADER */
+
 .movie_list_header {
-  padding: 10px 30px;
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-  margin-bottom: 5px;
+  gap: 35px;
+
+  padding: 24px 30px;
+  margin-bottom: 15px;
+
+  border-bottom: 1px solid var(--bg-elevated);
+}
+
+/* SECTION TITLE */
+
+.movie_list_title {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.movie_list_eyebrow {
+  color: var(--gold);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
 }
 
 .movie_list_heading {
-  font-size: 26px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  margin: 0;
+
   color: var(--text-primary);
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.8px;
 }
 
-.movie_filter {
-  list-style: none;
-  font-size: 16px;
+/* TITLE ICON */
+
+.heading_icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  color: var(--gold);
+  background: var(--gold-soft);
+  border: 1px solid var(--gold-soft);
+  border-radius: 10px;
+
+  font-size: 15px;
+  transition: transform 0.3s ease;
 }
 
-.movie_filter_item {
-  padding: 5px 10px;
-  cursor: pointer;
+.movie_list_heading:hover .heading_icon {
+  transform: translateY(-3px) rotate(8deg);
 }
 
-.movie_filter_item.active {
-  border-bottom: 1px solid var(--gold);
-  font-weight: 500;
+/* =========================================
+   SORTING TOOLBAR
+========================================= */
+
+.movie_list_fs {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 48px;
+  width: 100%;
 }
 
-.movie_sorting {
+.movie_sort_controls {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+
+  flex-shrink: 0;
+}
+
+/* =========================================
+   SORT GROUP
+========================================= */
+
+.movie_sort_group {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  height: 40px;
+  padding: 0 12px;
+
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 9px;
+
+  transition: all 0.3s ease;
+}
+
+.movie_sort_group:hover {
+  background: var(--bg-hover);
+  border-color: var(--gold-dark);
+}
+
+.movie_sort_group > i {
+  color: var(--gold);
+  font-size: 14px;
+  transition: transform 0.3s ease;
+}
+
+.movie_sort_group:hover > i {
+  transform: translateY(-2px);
+}
+
+/* =========================================
+   CUSTOM DROPDOWN
+========================================= */
+
+.custom_sort_dropdown {
+  position: relative;
+  min-width: 112px;
+}
+
+/* DROPDOWN TRIGGER */
+
+.movie_sort_trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+
+  width: 100%;
+  min-width: 112px;
+  height: 38px;
+
+  padding: 0 10px;
+
+  background: transparent;
   border: none;
   outline: none;
-  border-radius: 5px;
-  font-size: 16px;
-  font-weight: 500;
+
+  color: var(--text-primary);
   font-family: inherit;
-  height: 30px;
-  padding: 0 5px;
-  margin: 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: color 0.3s ease;
 }
 
+.movie_sort_trigger:hover,
+.movie_sort_trigger.active {
+  color: var(--gold-light);
+}
+
+.sort_chevron {
+  color: var(--gold);
+  font-size: 10px;
+
+  transition: transform 0.3s ease;
+}
+
+.sort_chevron.rotated {
+  transform: rotate(180deg);
+}
+
+/* DROPDOWN MENU */
+
+.movie_sort_menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+
+  width: 100%;
+  min-width: 140px;
+
+  padding: 5px;
+
+  background: var(--bg-card);
+  border: 1px solid var(--bg-elevated);
+  border-radius: 10px;
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+
+  z-index: 1000;
+
+  animation: dropdownFade 0.2s ease forwards;
+  transform-origin: top center;
+}
+
+/* DROPDOWN OPTIONS */
+
+.movie_sort_option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  width: 100%;
+  padding: 10px 11px;
+
+  background: transparent;
+  border: none;
+  border-radius: 7px;
+
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+
+  text-align: left;
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.movie_sort_option:hover {
+  background: var(--bg-hover);
+  color: var(--gold-light);
+}
+
+.movie_sort_option.selected {
+  background: var(--gold-soft);
+  color: var(--gold-light);
+  font-weight: 700;
+}
+
+.movie_sort_option.selected i {
+  color: var(--gold);
+  font-size: 11px;
+}
+
+/* DROPDOWN ANIMATION */
+
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-7px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ACCESSIBILITY */
+
+.movie_sort_trigger:focus-visible,
+.movie_sort_option:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* =========================================
+   MOVIE CARDS
+========================================= */
+
 .movie_cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  align-items: stretch;
+  gap: 20px;
+
   width: 100%;
   max-width: var(--container-width);
+
   margin-inline: auto;
-  align-items: stretch;
   padding: 20px 20px 40px;
 }
 
-@media (max-width: 480px) {
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1100px) {
+  .movie_list_header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .movie_list_fs {
+    justify-content: space-between;
+    gap: 24px;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+  .movie_list_header {
+    padding: 20px 16px;
+    gap: 20px;
+  }
+
+  .movie_list_heading {
+    font-size: 25px;
+  }
+
+  .movie_list_fs {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .movie_sort_controls {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .movie_sort_group {
+    flex: 1;
+    min-width: 0;
+    padding: 0 8px;
+  }
+
+  .custom_sort_dropdown {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .movie_sort_trigger {
+    min-width: 0;
+    gap: 8px;
+    font-size: 12px;
+  }
+
+  .movie_sort_menu {
+    min-width: 130px;
+  }
+
   .movie_cards {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 12px;
-    padding-inline: 12px;
+    padding: 15px 12px 30px;
+  }
+}
+
+/* SMALL MOBILE */
+
+@media (max-width: 360px) {
+  .movie_sort_controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .movie_sort_group {
+    width: 100%;
+    flex: none;
+  }
+}
+
+/* REDUCED MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+  .movie_sort_group,
+  .movie_sort_trigger,
+  .movie_sort_option,
+  .sort_chevron,
+  .heading_icon {
+    transition: none;
+  }
+
+  .movie_sort_menu {
+    animation: none;
   }
 }
