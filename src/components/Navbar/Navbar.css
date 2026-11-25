@@ -60,3 +60,18 @@
 .navbar_emoji {
   font-size: 18px;
 }
+
+/* NAVBAR ACTIONS */
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+/* BRAND HIGHLIGHT */
+
+.navbar_brand_highlight {
+  color: var(--text-primary);
+}
