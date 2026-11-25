@@ -5,6 +5,7 @@
 CineVault is a responsive React single-page application powered by The Movie Database (TMDB) API. It presents movie collections in a focused, poster-first layout with per-collection rating filters, sorting controls, deep links to TMDB movie pages, and a persistent light/dark theme.
 
 **Repository:** [github.com/Basel-Amr/cinevault-movie-discovery-app](https://github.com/Basel-Amr/cinevault-movie-discovery-app)
+**Live Link:** [github.com/Basel-Amr/cinevault-movie-discovery-app](https://basel-amr.github.io/cinevault-movie-discovery-app/]([https://github.com/Basel-Amr/cinevault-movie-discovery-app](https://basel-amr.github.io/cinevault-movie-discovery-app/))
 
 [![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)](https://vite.dev/)
