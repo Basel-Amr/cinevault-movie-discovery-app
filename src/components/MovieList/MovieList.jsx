@@ -90,7 +90,7 @@ const SortDropdown = ({ value, options, onChange, icon }) => {
 // MOVIE LIST
 // ==========================================
 
-const MovieList = () => {
+const MovieList = ({ id, type, title, subtitle, icon }) => {
   const [movies, setMovies] = useState([]);
   const [minrating, setminRating] = useState(0);
   const [filteredMovies, setfilteredMovies] = useState([]);
@@ -116,7 +116,7 @@ const MovieList = () => {
       }
 
       const response = await fetch(
-        "https://api.themoviedb.org/3/movie/popular",
+        `https://api.themoviedb.org/3/movie/${type}`,
         {
           method: "GET",
           headers: {
@@ -190,7 +190,7 @@ const MovieList = () => {
 
   return (
     <div>
-      <section className="movie_list">
+      <section className="movie_list" id={id}>
         {/* SECTION HEADER */}
 
         <header className="movie_list_header align_center">
@@ -200,9 +200,10 @@ const MovieList = () => {
             </span>
 
             <h2 className="movie_list_heading">
-              Popular
+              {title}
+
               <span className="heading_icon">
-                <i className="fa-solid fa-fire-flame-curved"></i>
+                <i className={icon}></i>
               </span>
             </h2>
           </div>
