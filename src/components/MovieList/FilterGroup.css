@@ -1,0 +1,178 @@
+/* =========================================
+   CINEVAULT - RATING FILTER
+========================================= */
+
+/* FILTER WRAPPER */
+
+.rating_filter_wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  flex-shrink: 0;
+}
+
+/* FILTER LABEL */
+
+.filter_label {
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+}
+
+/* FILTER CONTAINER */
+
+.movie_filter {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  list-style: none;
+  padding: 5px;
+  margin: 0;
+
+  background: var(--bg-secondary);
+  border: 1px solid var(--bg-elevated);
+  border-radius: 14px;
+}
+
+.movie_filter li {
+  list-style: none;
+}
+
+/* FILTER BUTTON */
+
+.movie_filter_item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  min-width: 58px;
+  padding: 10px 15px;
+
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 10px;
+
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* STAR ICON */
+
+.movie_filter_item i {
+  color: var(--gold);
+  font-size: 12px;
+  transition: transform 0.35s ease;
+}
+
+/* HOVER */
+
+.movie_filter_item:hover:not(.active) {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+}
+
+.movie_filter_item:hover i {
+  transform: rotate(15deg) scale(1.2);
+}
+
+/* ACTIVE FILTER */
+
+.movie_filter_item.active {
+  color: var(--text-inverse);
+  background: var(--gold);
+  border-color: var(--gold);
+
+  box-shadow: 0 4px 16px var(--gold-soft);
+
+  animation: ratingActivate 0.4s ease;
+}
+
+/* ACTIVE STAR */
+
+.movie_filter_item.active i {
+  color: var(--text-inverse);
+  animation: starActivate 0.5s ease;
+}
+
+/* ANIMATIONS */
+
+@keyframes ratingActivate {
+  0% {
+    transform: scale(0.88);
+    opacity: 0.7;
+  }
+
+  65% {
+    transform: scale(1.07);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes starActivate {
+  0% {
+    transform: scale(0) rotate(-90deg);
+  }
+
+  70% {
+    transform: scale(1.4) rotate(15deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(0);
+  }
+}
+
+/* ACCESSIBILITY */
+
+.movie_filter_item:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 3px;
+}
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+  .rating_filter_wrapper {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .movie_filter {
+    width: fit-content;
+  }
+
+  .movie_filter_item {
+    min-width: 48px;
+    padding: 9px 11px;
+  }
+}
+
+/* REDUCED MOTION */
+
+@media (prefers-reduced-motion: reduce) {
+  .movie_filter_item,
+  .movie_filter_item i {
+    animation: none !important;
+    transition: none !important;
+  }
+}

@@ -20,6 +20,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  animation: movieReveal 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 
 .movie-card:hover {
@@ -328,5 +329,17 @@
   .movie-card,
   .movie-card * {
     transition: none !important;
+  }
+}
+
+@keyframes movieReveal {
+  from {
+    opacity: 0;
+    transform: translateY(22px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }

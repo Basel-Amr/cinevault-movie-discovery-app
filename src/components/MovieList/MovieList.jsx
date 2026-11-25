@@ -1,69 +1,246 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./MovieList.css";
 import MovieCard from "./MovieCard";
+import FilterGroup from "./FilterGroup";
+
+// ==========================================
+// CUSTOM SORT DROPDOWN
+// ==========================================
+
+const SortDropdown = ({ value, options, onChange, icon }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    const handleEscape = (event) => {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, []);
+
+  const selectedOption = options.find((option) => option.value === value);
+
+  return (
+    <div className="movie_sort_group" ref={dropdownRef}>
+      {icon && <i className={icon}></i>}
+
+      <div className="custom_sort_dropdown">
+        <button
+          type="button"
+          className={`movie_sort_trigger ${isOpen ? "active" : ""}`}
+          onClick={() => setIsOpen((prev) => !prev)}
+          aria-haspopup="menu"
+          aria-expanded={isOpen}
+        >
+          <span>{selectedOption?.label}</span>
+
+          <i
+            className={`fa-solid fa-chevron-down sort_chevron ${
+              isOpen ? "rotated" : ""
+            }`}
+          ></i>
+        </button>
+
+        {isOpen && (
+          <div className="movie_sort_menu" role="menu">
+            {options.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                role="menuitem"
+                className={`movie_sort_option ${
+                  value === option.value ? "selected" : ""
+                }`}
+                onClick={() => {
+                  onChange(option.value);
+                  setIsOpen(false);
+                }}
+              >
+                <span>{option.label}</span>
+
+                {value === option.value && (
+                  <i className="fa-solid fa-check"></i>
+                )}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// ==========================================
+// MOVIE LIST
+// ==========================================
+
 const MovieList = () => {
   const [movies, setMovies] = useState([]);
+  const [minrating, setminRating] = useState(0);
+  const [filteredMovies, setfilteredMovies] = useState([]);
+
+  // Sorting states
+  const [sortBy, setSortBy] = useState("date");
+  const [sortOrder, setSortOrder] = useState("asc");
+
+  // ==========================================
+  // FETCH MOVIES
+  // ==========================================
+
   useEffect(() => {
     fetchmovies();
   }, []);
+
   const fetchmovies = async () => {
-    const response = await fetch("https://api.themoviedb.org/3/movie/popular", {
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJiYmU4MWY0Y2I0NjA4Y2VkM2IxMmIyYTNkY2RiZTkyNyIsIm5iZiI6MTc5NTQ4MTUyMC40NjgsInN1YiI6IjZiMDRkZmIwYmMxZmQ3ZjgxOTQwODI5NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.lXmtc0hq5uPlMn-4yYXx4gMKLZ6TaWkWd4eSz_AacY8",
-      },
-    });
-    const data = await response.json();
-    setMovies(data.results);
+    try {
+      const token = import.meta.env.VITE_TMDB_READ_ACCESS_TOKEN;
+
+      const response = await fetch(
+        "https://api.themoviedb.org/3/movie/popular",
+        {
+          headers: {
+            accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch movies");
+      }
+
+      const data = await response.json();
+
+      setMovies(data.results || []);
+      setfilteredMovies(data.results || []);
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+    }
   };
+
+  // ==========================================
+  // FILTER MOVIES BY RATING
+  // ==========================================
+
+  const handleFilter = (rate) => {
+    if (rate === minrating) {
+      setminRating(0);
+      setfilteredMovies(movies);
+    } else {
+      setminRating(rate);
+
+      const filtered = movies.filter((movie) => movie.vote_average >= rate);
+
+      setfilteredMovies(filtered);
+    }
+  };
+
+  // ==========================================
+  // SORT MOVIES
+  // ==========================================
+
+  const sortedMovies = useMemo(() => {
+    const sorted = [...filteredMovies];
+
+    sorted.sort((a, b) => {
+      let comparison = 0;
+
+      if (sortBy === "date") {
+        comparison = (a.release_date || "").localeCompare(b.release_date || "");
+      } else if (sortBy === "rating") {
+        comparison = a.vote_average - b.vote_average;
+      }
+
+      return sortOrder === "asc" ? comparison : -comparison;
+    });
+
+    return sorted;
+  }, [filteredMovies, sortBy, sortOrder]);
+
+  // ==========================================
+  // RENDER
+  // ==========================================
 
   return (
     <div>
       <section className="movie_list">
-        {/* Part 1: Header */}
-        <header className="movie_list_header align_center">
-          <h2 className="align_center movie_list_heading ">
-            Popular
-            <i className="navbar_emoji fa-solid fa-fire-flame-curved"></i>
-          </h2>
-          <div className="align_center movie_list_fs ">
-            <ul className=" align_center movie_filter ">
-              <li className="movie_filter_item active">
-                8+ <i className="fa-solid fa-star"></i>
-              </li>
-              <li className="movie_filter_item">
-                7+ <i className="fa-solid fa-star"></i>
-              </li>
-              <li className="movie_filter_item">
-                6+ <i className="fa-solid fa-star"></i>
-              </li>
-            </ul>
-            {/*./movie_filter*/}
-            <select name="" id="" className="movie_sorting">
-              <option value="">SortBy</option>
-              <option value="">Date</option>
-              <option value="">Rating</option>
-            </select>
-            <select name="" id="" className="movie_sorting">
-              <option value="">Ascending</option>
-              <option value="">Descending</option>
-            </select>
-            {/*./movie_sorting*/}
-          </div>
-          {/*./movie_list_fs*/}
-        </header>
-        {/*./movie_list_header*/}
+        {/* SECTION HEADER */}
 
-        {/*  Part 2: Movie Cart List */}
+        <header className="movie_list_header align_center">
+          <div className="movie_list_title">
+            <span className="movie_list_eyebrow">
+              DISCOVER YOUR NEXT FAVORITE
+            </span>
+
+            <h2 className="movie_list_heading">
+              Popular
+              <span className="heading_icon">
+                <i className="fa-solid fa-fire-flame-curved"></i>
+              </span>
+            </h2>
+          </div>
+
+          <div className="align_center movie_list_fs">
+            {/* RATING FILTER */}
+
+            <FilterGroup
+              minRating={minrating}
+              onRatingClick={handleFilter}
+              ratings={[8, 7, 6]}
+            />
+
+            {/* SORTING CONTROLS */}
+
+            <div className="movie_sort_controls">
+              {/* SORT BY */}
+
+              <SortDropdown
+                icon="fa-solid fa-arrow-down-wide-short"
+                value={sortBy}
+                onChange={setSortBy}
+                options={[
+                  { value: "date", label: "Date" },
+                  { value: "rating", label: "Rating" },
+                ]}
+              />
+
+              {/* SORT ORDER */}
+
+              <SortDropdown
+                value={sortOrder}
+                onChange={setSortOrder}
+                options={[
+                  { value: "asc", label: "Ascending" },
+                  { value: "desc", label: "Descending" },
+                ]}
+              />
+            </div>
+          </div>
+        </header>
+
+        {/* MOVIE CARDS */}
 
         <div className="movie_cards grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5 gap-4 sm:gap-5">
-          {movies.map((movie) => (
+          {sortedMovies.map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
         </div>
-
-        {/*./movie_cards*/}
       </section>
     </div>
   );
